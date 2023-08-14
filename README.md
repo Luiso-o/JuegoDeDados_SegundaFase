@@ -29,10 +29,11 @@ GET /players/ranking/winner: devuelve al jugador con peor porcentaje de éxito.
 Cambia todo lo que necesites y utiliza MongoDB para persistir sus datos.
 
 Captura Swagger http://localhost:8080/swagger-ui/index.html#/
-![Captura1](https://github.com/Luiso-o/JuegoDeDado_TerceraFase_ApiRest/assets/128043647/e1c64a45-c3b6-4955-8910-19c9eb966b9b)
+![Captura3](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/82597d76-c988-4dea-976a-e552c36240c3)
 
 Captura Base de datos jugadores
-![Captura2](https://github.com/Luiso-o/JuegoDeDado_TerceraFase_ApiRest/assets/128043647/5d2c2f50-61de-4c59-9ece-26993719612d)
+![Captura1](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/ba8befc8-3590-408a-b0da-0e6a9bd1f151)
 
 Captura base de datos Partidas
-![Captura3](https://github.com/Luiso-o/JuegoDeDado_TerceraFase_ApiRest/assets/128043647/8b09f27c-30c6-4055-9e48-2091761fb7ef)
+![Captura2](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/e1df5e9b-7190-449c-8667-f1a7f1d47146)
+
