@@ -26,7 +26,7 @@ GET /players/ranking: devuelve el ranking medio de todos los jugadores/as del si
 GET /players/ranking/loser: devuelve al jugador/a con peor porcentaje de éxito.
 GET /players/ranking/winner: devuelve al jugador con peor porcentaje de éxito.
 
-Cambia todo lo que necesites y utiliza MongoDB para persistir sus datos.
+fase 2 : Cambia todo lo que necesites y utiliza MongoDB para persistir sus datos.
 
 Captura Swagger http://localhost:8080/swagger-ui/index.html#/
 ![Captura3](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/82597d76-c988-4dea-976a-e552c36240c3)
