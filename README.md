@@ -37,3 +37,6 @@ Captura Base de datos jugadores
 Captura base de datos Partidas
 ![Captura2](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/e1df5e9b-7190-449c-8667-f1a7f1d47146)
 
+TEST DE INTEGRACION CONTROLADOR
+![CapturaController](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/0d13291f-4303-4405-a03f-fc47ff4fcb94)
+
