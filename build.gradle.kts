@@ -21,7 +21,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.2")
 
 	//Mongo
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
@@ -36,10 +36,6 @@ dependencies {
 	//anotaciones
 	implementation("org.webjars:webjars-locator-core:0.53")
 	implementation("com.google.code.findbugs:jsr305:3.0.2")
-
-
-
-
 }
 
 tasks.withType<Test> {

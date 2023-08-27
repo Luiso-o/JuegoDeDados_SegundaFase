@@ -1,5 +1,6 @@
 package JuegoDeDados.Mongo.model.Services;
 
+import JuegoDeDados.Mongo.exceptions.ListOfEmptyGamesException;
 import JuegoDeDados.Mongo.model.Dto.PartidaDtoMongo;
 import JuegoDeDados.Mongo.model.entity.JugadorEntityMongo;
 import JuegoDeDados.Mongo.model.entity.PartidaEntityMongo;
@@ -49,7 +50,7 @@ public class PartidaServiceMongo {
     public void eliminarPartidasDeJugador(JugadorEntityMongo jugador){
         List<PartidaEntityMongo> misPartidas = partidaRepositoryMongo.findByJugador(jugador);
         if (misPartidas.isEmpty()) {
-            throw new RuntimeException("El jugador no tiene partidas que eliminar");
+            throw new ListOfEmptyGamesException();
         }
         misPartidas.forEach(partida -> partidaRepositoryMongo.delete(partida));
         jugadorRepositoryMongo.save(jugador);
@@ -65,7 +66,7 @@ public class PartidaServiceMongo {
     public List<PartidaDtoMongo> encuentraPartidasJugador(JugadorEntityMongo jugador){
         List<PartidaEntityMongo> misPartidas = partidaRepositoryMongo.findByJugador(jugador);
         if(misPartidas.isEmpty()){
-            throw new NotFoundException("No se le encontraron partidas a este jugador");
+            throw new ListOfEmptyGamesException();
         }
 
         return misPartidas.stream()

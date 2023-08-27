@@ -1,5 +1,8 @@
 package JuegoDeDados.Mongo.model.Services;
 
+import JuegoDeDados.Mongo.exceptions.EmptyPlayersListException;
+import JuegoDeDados.Mongo.exceptions.ListOfEmptyGamesException;
+import JuegoDeDados.Mongo.exceptions.PlayerNotFoundException;
 import JuegoDeDados.Mongo.model.Dto.JugadorDtoMongo;
 import JuegoDeDados.Mongo.model.entity.JugadorEntityMongo;
 import JuegoDeDados.Mongo.model.entity.PartidaEntityMongo;
@@ -12,13 +15,16 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Builder
 @Service
 public class JugadorServicesMongo {
+
     private JugadorRepositoryMongo jugadorRepositoryMongo;
 
     private PartidaRepositoryMongo partidaRepositoryMongo;
@@ -34,6 +40,7 @@ public class JugadorServicesMongo {
      */
     public JugadorDtoMongo crearJugador(String nombre){
         JugadorEntityMongo jugador = JugadorEntityMongo.builder()
+                .id(asignarId())
                 .nombre(filtraNombre(nombre))
                 .build();
         JugadorEntityMongo jugadorCreado = jugadorRepositoryMongo.save(jugador);
@@ -45,23 +52,18 @@ public class JugadorServicesMongo {
      *
      * @param id El ID del jugador que se desea buscar.
      * @return El objeto JugadorEntityMongo que representa al jugador con el ID especificado.
-     * @throws NotFoundException Si la lista de jugadores está vacía.
+     * @throws NoSuchElementException Si la lista de jugadores está vacía.
      * @throws RuntimeException Si no se encuentra un jugador con el ID proporcionado.
      */
-    public JugadorEntityMongo buscarJugadorPorId(String id){
+    public JugadorEntityMongo buscarJugadorPorId(String id) {
+        List<JugadorEntityMongo> misJugadores = jugadorRepositoryMongo.findAll();
 
-        try {
-            List<JugadorEntityMongo> misJugadores = jugadorRepositoryMongo.findAll();
-
-            if (misJugadores.isEmpty()) {
-                throw new NotFoundException("Lista de jugadores vacía");
-            }
-        } catch (NotFoundException e) {
-            throw new NotFoundException("Lista de jugadores vacía");
+        if (misJugadores.isEmpty()) {
+            throw new EmptyPlayersListException();
         }
 
         return jugadorRepositoryMongo.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se encontró el jugador con el ID proporcionado."));
+                .orElseThrow(() -> new PlayerNotFoundException(id));
     }
 
     /**
@@ -99,7 +101,7 @@ public class JugadorServicesMongo {
     public List<JugadorDtoMongo> listaJugadores() {
         List<JugadorEntityMongo> jugadores = jugadorRepositoryMongo.findAll();
         if (jugadores.isEmpty()) {
-            throw new NotFoundException("Lista de Jugadores vacía");
+            throw new EmptyPlayersListException();
         }
         return jugadores.stream().map(this::pasarEntidadADto)
                 .collect(Collectors.toList());
@@ -124,7 +126,7 @@ public class JugadorServicesMongo {
      * Obtiene una lista de los peores jugadores basados en su porcentaje de éxito.
      *
      * @return Una lista de objetos JugadorDtoMongo que representan a los peores jugadores.
-     * @throws NotFoundException Si no se encuentran jugadores en la base de datos.
+     * @throws EmptyPlayersListException Si no se encuentran jugadores en la base de datos.
      */
     public List<JugadorDtoMongo> peoresJugadores(){
         List<JugadorEntityMongo> todosLosJugadores = jugadorRepositoryMongo.findAll();
@@ -132,7 +134,7 @@ public class JugadorServicesMongo {
         int porcentajeMasBajo = 100; //Partimos con el porcentaje más alto
 
         if (todosLosJugadores.isEmpty()) {
-            throw  new NotFoundException("No hay jugadores en la base de datos");
+            throw  new EmptyPlayersListException();
         }
 
         for (JugadorEntityMongo jugador : todosLosJugadores) {
@@ -155,15 +157,15 @@ public class JugadorServicesMongo {
      * Obtiene una lista de los jugadores con el mismo porcentaje más alto de éxito.
      *
      * @return Una lista de objetos JugadorDtoMongo que representan a los jugadores con el mismo porcentaje más alto.
-     * @throws NotFoundException Si no se encuentran jugadores en la base de datos.
+     * @throws EmptyPlayersListException Si no se encuentran jugadores en la base de datos.
      */
-    public List<JugadorDtoMongo> mejoresJugadores() throws NotFoundException {
+    public List<JugadorDtoMongo> mejoresJugadores()  {
         List<JugadorEntityMongo> todosLosJugadores = jugadorRepositoryMongo.findAll();
         List<JugadorDtoMongo> mejoresJugadores = new ArrayList<>();
         int porcentajeMasAlto = 0; // Partimos con el porcentaje más bajo
 
         if (todosLosJugadores.isEmpty()) {
-            throw new NotFoundException("No hay jugadores en la base de datos");
+            throw new EmptyPlayersListException();
         }
 
         for (JugadorEntityMongo jugador : todosLosJugadores) {
@@ -194,19 +196,24 @@ public class JugadorServicesMongo {
      *
      * @param jugador La entidad del jugador para el que se va a calcular el porcentaje de éxito.
      * @return El porcentaje de éxito del jugador en sus partidas. Si no hay partidas registradas, devuelve 0.
-     * @throws RuntimeException Si no se encuentra el jugador con el ID proporcionado.
+     * @throws ListOfEmptyGamesException Si no se encuentra el jugador con el ID proporcionado.
      */
     private int calculaPorcentajeExitoDeUnJugador(JugadorEntityMongo jugador){
-        int porcentajeExito = 0, victorias;
+
         List<PartidaEntityMongo> misPartidas = partidaRepositoryMongo.findByJugador(jugador);
+
+        if (misPartidas == null) {
+            throw new PlayerNotFoundException(jugador.getId());
+        }
+
+        if (misPartidas.isEmpty()) {
+            throw new ListOfEmptyGamesException();
+        }
+
+        int victorias = misPartidas.stream().mapToInt(PartidaEntityMongo::getVictorias).sum();
         int cantidadPartidas = misPartidas.size();
 
-        victorias = misPartidas.stream().mapToInt(PartidaEntityMongo::getVictorias).sum();
-
-        if (cantidadPartidas > 0) {
-            porcentajeExito = (victorias * 100) / cantidadPartidas;
-        }
-        return porcentajeExito;
+        return (victorias * 100) / cantidadPartidas;
     }
 
     /**
@@ -244,4 +251,27 @@ public class JugadorServicesMongo {
             return "Anónimo";
         }
     }
+
+    /**
+     * Obtiene el siguiente ID para un jugador en la base de datos.
+     *
+     * @return El siguiente ID disponible como cadena.
+     */
+    private String asignarId() {
+        List<JugadorEntityMongo> jugadores = jugadorRepositoryMongo.findAll();
+
+        if (jugadores.isEmpty()) {
+            return "1";
+        }
+
+        String maxId = jugadores.stream()
+                .map(JugadorEntityMongo::getId)
+                .max(Comparator.naturalOrder())
+                .orElse("0");
+
+        int nextId = Integer.parseInt(maxId) + 1;
+        return String.valueOf(nextId);
+    }
+
+
 }
