@@ -1,9 +1,12 @@
 package JuegoDeDados.Mongo.SwaggerConfig;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
 
 @OpenAPIDefinition(
@@ -13,9 +16,12 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         email = "cheportillo@gmail.com",
                         url = "https://github.com/Luiso-o"
                 ),
-                description = "API para gestionar jugadores y partidas en el juego de dados usando MongoDb y Mysql Workbench como base de datos persistentes",
+                description = """
+                        API para gestionar jugadores y partidas en el juego de dados
+                        Base de datos : MongoDb
+                        Seguridad : Spring Security + Json Web Token""",
                 title = "Juego de dados con Jwt && Security",
-                version = "1.0",
+                version = "2.0",
                 license = @License(
                         name = "Apache 2.0",
                         url = "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -31,6 +37,14 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         url = "https://github.com/Luiso-o"
                 )
         }
+)
+@SecurityScheme(
+        name = "bearerauth",
+        description = "Introduce tu Jwt Token",
+        scheme = "bearer",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        in = SecuritySchemeIn.HEADER
 )
 public class ApiConfig {
 }

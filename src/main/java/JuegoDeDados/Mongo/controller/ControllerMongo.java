@@ -10,12 +10,12 @@ import JuegoDeDados.Mongo.model.entity.JugadorEntityMongo;
 import com.mongodb.lang.Nullable;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,25 +27,13 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 @RequestMapping("jugador")
+@SecurityRequirement(name = "bearerauth")
 public class ControllerMongo {
 
     @Autowired
     private JugadorServicesMongo jugadorServicesMongo;
-
     @Autowired
     private PartidaServiceMongo partidaServiceMongo;
-
-    @Operation(summary = "Crea un nuevo jugador", description = "devuelve un objeto jugador,recibirá un parametro de tipo String, si no recibe nada devolverá un Anónimo")
-    @ApiResponse(responseCode = "200", description = "Nuevo Jugador Guardado con éxito")
-    @ApiResponse(responseCode = "400", description = "Solicitud incorrecta")
-    @ApiResponse(responseCode = "500", description = "Error interno, Revise response status 500")
-    @PostMapping
-    public ResponseEntity<JugadorDtoMongo> crearNuevoUsuario(@Nullable @RequestParam
-             @Pattern(regexp = "^[a-zA-Z]*$",message = "El nombre debe contener solo letras") String nombre)
-    {
-        JugadorDtoMongo jugadorNuevo = jugadorServicesMongo.crearJugador(nombre);
-        return ResponseEntity.ok(jugadorNuevo);
-    }
 
     @Operation(summary = "Actualiza el nombre de un Jugador", description = "Actualizará el nombre del jugador correspondiente al id introducido")
     @ApiResponse(responseCode = "200", description = "Nombre de jugador actualizado con éxito")

@@ -18,13 +18,12 @@ repositories {
 
 dependencies {
 	//spring config
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.2")
 
 	//Mongo
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb:3.1.2")
 
 	//Lombok
 	implementation("org.projectlombok:lombok:1.18.20")
@@ -36,6 +35,16 @@ dependencies {
 	//anotaciones
 	implementation("org.webjars:webjars-locator-core:0.53")
 	implementation("com.google.code.findbugs:jsr305:3.0.2")
+
+	//Security
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	testImplementation("org.springframework.security:spring-security-test")
+
+	//Json Web Token
+	implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+	implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
+	implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
+
 }
 
 tasks.withType<Test> {

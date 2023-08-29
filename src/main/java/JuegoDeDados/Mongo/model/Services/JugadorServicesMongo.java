@@ -3,14 +3,16 @@ package JuegoDeDados.Mongo.model.Services;
 import JuegoDeDados.Mongo.exceptions.EmptyPlayersListException;
 import JuegoDeDados.Mongo.exceptions.ListOfEmptyGamesException;
 import JuegoDeDados.Mongo.exceptions.PlayerNotFoundException;
+import JuegoDeDados.Mongo.model.Dto.AuthResponseMongo;
 import JuegoDeDados.Mongo.model.Dto.JugadorDtoMongo;
 import JuegoDeDados.Mongo.model.entity.JugadorEntityMongo;
 import JuegoDeDados.Mongo.model.entity.PartidaEntityMongo;
+import JuegoDeDados.Mongo.model.entity.Role;
 import JuegoDeDados.Mongo.model.repository.JugadorRepositoryMongo;
 import JuegoDeDados.Mongo.model.repository.PartidaRepositoryMongo;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -26,25 +28,33 @@ import java.util.stream.Collectors;
 public class JugadorServicesMongo {
 
     private JugadorRepositoryMongo jugadorRepositoryMongo;
-
     private PartidaRepositoryMongo partidaRepositoryMongo;
+    private PasswordEncoder passwordEncoder;
+    private JwtServiceMongo jwtService;
 
     /**
-     * Crea un nuevo jugador en el sistema.
-     * <p>
-     * Este método permite la creación de un nuevo jugador en el sistema con el nombre proporcionado.
-     * Si el nombre es nulo o está en blanco, se asignará el nombre "Anónimo" al jugador creado.
+     * Registra un nuevo usuario en el sistema.
      *
-     * @param nombre El nombre del jugador. Puede ser nulo o en blanco.
-     * @return Un objeto JugadorDtoMongo que representa al jugador recién creado.
+     * @param nombre El nombre del usuario a registrar.
+     * @param email El correo electrónico del usuario a registrar.
+     * @param password La contraseña del usuario a registrar.
+     * @return Una instancia de AuthResponse que contiene el token generado para el usuario registrado.
      */
-    public JugadorDtoMongo crearJugador(String nombre){
-        JugadorEntityMongo jugador = JugadorEntityMongo.builder()
+    public AuthResponseMongo register(String nombre, String email, String password){
+        JugadorEntityMongo usuario = JugadorEntityMongo.builder()
                 .id(asignarId())
+                .email(email)
+                .password(passwordEncoder.encode(password))
                 .nombre(filtraNombre(nombre))
+                .porcentajeExito(0)
+                .role(Role.USER)
                 .build();
-        JugadorEntityMongo jugadorCreado = jugadorRepositoryMongo.save(jugador);
-        return pasarEntidadADto(jugadorCreado);
+
+        jugadorRepositoryMongo.save(usuario);
+
+        return AuthResponseMongo.builder()
+                .token(jwtService.getToken(usuario))
+                .build();
     }
 
     /**
@@ -85,7 +95,6 @@ public class JugadorServicesMongo {
      *
      * @param jugador El objeto JugadorEntityMongo que representa al jugador cuyo porcentaje de éxito se actualizará.
      */
-    @Transactional
     public void actualizarPorcentajeExitoJugador(JugadorEntityMongo jugador){
         int porcentajeExitoActualizado = calculaPorcentajeExitoDeUnJugador(jugador);
         jugador.setPorcentajeExito(porcentajeExitoActualizado);
