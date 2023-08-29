@@ -1,4 +1,4 @@
-# JuegoDeDado_SegundaFase @MongoDB @Gradle @Swuagger
+# JuegoDeDado_SegundaFase @MongoDB @Gradle @Swuagger @Security @JWT
 
 El juego de dados se juega con dos dados. En caso de que el resultado de la suma de ambos dados sea menor o igual a 7, la partida será ganada, si no es perdida. Un jugador/a puede ver un listado de todas las tiradas que ha realizado y el porcentaje de éxito.
 
@@ -47,4 +47,8 @@ Captura base de datos Partidas
 
 TEST DE INTEGRACION CONTROLADOR
 ![CapturaController](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/0d13291f-4303-4405-a03f-fc47ff4fcb94)
+
+AUTENTICACION Y GENERACION DE TOKEN 
+![CapturaSecurity](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/96139def-631d-4a80-92f6-2e5b1150fa22)
+
 
