@@ -16,15 +16,23 @@ NOTAS
 Tienes que tener en cuenta los siguientes detalles de construcción:
 
 URL's:
-POST: /players: crea un jugador/a.
-PUT /players: modifica el nombre del jugador/a.
-POST /players/{id}/games/ : un jugador/a específico realiza un tirón de los dados.
-DELETE /players/{id}/games: elimina las tiradas del jugador/a.
-GET /players/: devuelve el listado de todos los jugadores/as del sistema con su porcentaje medio de éxitos.
-GET /players/{id}/games: devuelve el listado de jugadas por un jugador/a.
-GET /players/ranking: devuelve el ranking medio de todos los jugadores/as del sistema. Es decir, el porcentaje medio de logros.
-GET /players/ranking/loser: devuelve al jugador/a con peor porcentaje de éxito.
-GET /players/ranking/winner: devuelve al jugador con peor porcentaje de éxito.
+-POST: /players: crea un jugador/a.
+
+-PUT /players: modifica el nombre del jugador/a.
+
+-POST /players/{id}/games/ : un jugador/a específico realiza un tirón de los dados.
+
+-DELETE /players/{id}/games: elimina las tiradas del jugador/a.
+
+-GET /players/: devuelve el listado de todos los jugadores/as del sistema con su porcentaje medio de éxitos.
+
+-GET /players/{id}/games: devuelve el listado de jugadas por un jugador/a.
+
+-GET /players/ranking: devuelve el ranking medio de todos los jugadores/as del sistema. Es decir, el porcentaje medio de logros.
+
+-GET /players/ranking/loser: devuelve al jugador/a con peor porcentaje de éxito.
+
+-GET /players/ranking/winner: devuelve al jugador con peor porcentaje de éxito.
 
 fase 2 : Cambia todo lo que necesites y utiliza MongoDB para persistir sus datos.
 
@@ -36,4 +44,7 @@ Captura Base de datos jugadores
 
 Captura base de datos Partidas
 ![Captura2](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/e1df5e9b-7190-449c-8667-f1a7f1d47146)
+
+TEST DE INTEGRACION CONTROLADOR
+![CapturaController](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/0d13291f-4303-4405-a03f-fc47ff4fcb94)
 
