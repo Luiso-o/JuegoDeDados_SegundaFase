@@ -1,4 +1,4 @@
-# JuegoDeDado_SegundaFase @MongoDB @Gradle @Swuagger @Security @JWT
+# JuegoDeDado_SegundaFase @MongoDB @Gradle @Swuagger @Security @JWT @Test de integración controller
 
 El juego de dados se juega con dos dados. En caso de que el resultado de la suma de ambos dados sea menor o igual a 7, la partida será ganada, si no es perdida. Un jugador/a puede ver un listado de todas las tiradas que ha realizado y el porcentaje de éxito.
 
