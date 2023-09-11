@@ -46,7 +46,7 @@ Captura base de datos Partidas
 ![Captura2](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/e1df5e9b-7190-449c-8667-f1a7f1d47146)
 
 TEST DE INTEGRACION CONTROLADOR
-![CapturaController](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/0d13291f-4303-4405-a03f-fc47ff4fcb94)
+![CapturaTestController](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/a29a4333-d1d6-48a7-8336-e18945c3634a)
 
 AUTENTICACION Y GENERACION DE TOKEN 
 ![CapturaSecurity](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/96139def-631d-4a80-92f6-2e5b1150fa22)
