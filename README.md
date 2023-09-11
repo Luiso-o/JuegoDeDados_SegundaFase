@@ -36,8 +36,8 @@ URL's:
 
 fase 2 : Cambia todo lo que necesites y utiliza MongoDB para persistir sus datos.
 
-Captura Swagger http://localhost:8080/swagger-ui/index.html#/
-![Captura3](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/82597d76-c988-4dea-976a-e552c36240c3)
+Interfaz de Usuario con autenticación y generación de token
+![CapturaSecurity](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/96139def-631d-4a80-92f6-2e5b1150fa22)
 
 Captura Base de datos jugadores
 ![Captura1](https://github.com/Luiso-o/JuegoDeDados_TerceraFase_ApiRest/assets/128043647/ba8befc8-3590-408a-b0da-0e6a9bd1f151)
@@ -48,7 +48,6 @@ Captura base de datos Partidas
 TEST DE INTEGRACION CONTROLADOR
 ![CapturaTestController](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/a29a4333-d1d6-48a7-8336-e18945c3634a)
 
-AUTENTICACION Y GENERACION DE TOKEN 
-![CapturaSecurity](https://github.com/Luiso-o/JuegoDeDados_SegundaFase/assets/128043647/96139def-631d-4a80-92f6-2e5b1150fa22)
+
 
 
